@@ -310,11 +310,11 @@ public class OpdPatientQueueController {
 			return "redirect:/module/patientdashboard/main.htm?patientId="
 			+ patientId + "&opdId=" + opdId;
 			} else {
-			opdPatientQueue = queueService.saveOpdPatientQueue(queue);
+			//opdPatientQueue = queueService.saveOpdPatientQueue(queue);
 			return "redirect:/module/patientdashboard/main.htm?patientId="
 			+ queue.getPatient().getPatientId() + "&opdId="
 			+ queue.getOpdConcept().getConceptId() + "&visitStatus="
-			+ queue.getVisitStatus() + "&queueId=" + opdPatientQueue.getId();
+			+ queue.getVisitStatus();
 			}
 	}
 
