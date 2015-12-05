@@ -1,0 +1,51 @@
+0.9.7
+- #Before going to triage or OPD dashboard user has to choose the option on main page. 
+- #Triage patient history screen has been redesigned for better usage .
+
+
+0.9.6
+- #module upgradation
+
+0.9.5
+-
+
+0.9.4
+- #512               Update registration page and print out page for NIKDU Hospital, Bangladesh i.e BD_SPECIALIZED or(BD_HOSPITAL)
+- #511               Update registration page and print out page for MCHTI Hospital, Bangladesh
+- #510               Update registration page and print out page for Govenment Employee Hospital, Bangladesh
+
+0.9.3
+-
+
+0.9.2
+- Resolved issues
+	Bug #125: [Mohali] Search a patient in system in OPD
+	Bug #165: OPD: Search patient in queue
+
+0.9.1
+- Added patient search for SOLAN.
+
+07/04/2011
+- Fix search patient on system and click on that go to dashboard with another patient
+- Fix On queue exist patient we search on system with that patient it will create 2 patients on queue
+05/04/2011
+Fix show age on queue
+0.6
+- Search patient in system using advance search
+
+0.4
+- Remove admin link in admin panel
+########################################
+0.3
+- fixed bug hover tr tag
+#####################################################
+0.2
+- fixed bug throw error when select patient in search result.
+##################################
+0.1
+- require ddupatientdashboard version 0.2
+- require hospitalcore version 0.4
+- require registration version 1.5.3
+- patient queue, patient will be added to queue from registration module
+- search patient in queue
+- search patient in system
