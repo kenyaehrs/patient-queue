@@ -6,7 +6,7 @@
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>patientqueue</artifactId>
 	<name>patientqueue</name>
-	<version>0.9.7</version>
+	<version>0.9.9-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<description>patientqueue</description>
