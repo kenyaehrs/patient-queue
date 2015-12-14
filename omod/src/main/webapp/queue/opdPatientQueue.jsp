@@ -50,7 +50,7 @@
 		<td align="center">${queue.sex}</td>
 		<%-- <td>${queue.category}</td> --%>
 		<td align="center">${queue.visitStatus}
-		<c:if test="${empty queue.visitStatus}">
+		<c:if test="${not empty queue.referralConceptName}">
 		Referred From ${queue.referralConceptName}
 		</c:if>
 		</td>

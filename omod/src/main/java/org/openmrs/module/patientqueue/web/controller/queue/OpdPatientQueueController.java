@@ -20,6 +20,7 @@
 
 package org.openmrs.module.patientqueue.web.controller.queue;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
+import org.openmrs.Encounter;
 import org.openmrs.ConceptAnswer;
 import org.openmrs.Patient;
 import org.openmrs.PersonAttribute;
@@ -192,8 +194,11 @@ public class OpdPatientQueueController {
 					+ "&queueId="
 					+ queue.getId();
 		} else {
+			
 			OpdPatientQueue queue = queueService
 					.getOpdPatientQueueById(queueItemId);
+			
+
 			queue.setStatus(Context.getAuthenticatedUser().getGivenName() + " "
 					+ OPDPatientQueueConstants.STATUS);
 			queue.setUser(Context.getAuthenticatedUser());
@@ -226,7 +231,7 @@ public class OpdPatientQueueController {
 
 		OpdPatientQueue opq = queueService.getOpdPatientQueue(patient
 				.getPatientIdentifier().getIdentifier(), opdId);
-
+              
 		if (opq != null) {
 			return "redirect:/module/patientdashboard/main.htm?patientId="
 					+ opq.getPatient().getPatientId() + "&opdId="
@@ -237,6 +242,7 @@ public class OpdPatientQueueController {
 		
 		OpdPatientQueueLog opql = queueService.getOpdPatientQueueLog(patient
 				.getPatientIdentifier().getIdentifier(), opdId);
+
 		IpdPatientAdmissionLog ipal=ipdService.getIpdPatientAdmissionLog(opql);
 		if (ipal != null) {
 			return "redirect:/module/patientdashboard/main.htm?patientId="
@@ -302,19 +308,31 @@ public class OpdPatientQueueController {
 		queue.setStatus(Context.getAuthenticatedUser().getGivenName() + " "
 				+ OPDPatientQueueConstants.STATUS);
 		queue.setCategory(selectedCategory);
-		queue.setVisitStatus("REVISIT");
-		
-		Boolean pd = patient.getDead();
+		queue.setVisitStatus("REVISIT");		
+		Encounter encounter = Context.getService(PatientQueueService.class).getLastOPDEncounter(patient);
 		OpdPatientQueue opdPatientQueue = null;
+		 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		    String created = sdf.format(encounter.getDateCreated());
+			String sft= sdf.format(new Date());
+			int value=sft.compareTo(created);
+					Boolean pd = patient.getDead();
 		if (pd == true) {
 			return "redirect:/module/patientdashboard/main.htm?patientId="
 			+ patientId + "&opdId=" + opdId;
-			} else {
-			//opdPatientQueue = queueService.saveOpdPatientQueue(queue);
+			} else if(value==0)  {
+			opdPatientQueue = queueService.saveOpdPatientQueue(queue);
 			return "redirect:/module/patientdashboard/main.htm?patientId="
 			+ queue.getPatient().getPatientId() + "&opdId="
 			+ queue.getOpdConcept().getConceptId() + "&visitStatus="
-			+ queue.getVisitStatus();
+			+ queue.getVisitStatus()+ "&queueId=" + opdPatientQueue.getId();
+			}
+			else
+			{
+				  	return "redirect:/module/patientdashboard/main.htm?patientId="
+							+ queue.getPatient().getPatientId() + "&opdId="
+							+ queue.getOpdConcept().getConceptId() + "&visitStatus="
+							+ queue.getVisitStatus();
+
 			}
 	}
 
