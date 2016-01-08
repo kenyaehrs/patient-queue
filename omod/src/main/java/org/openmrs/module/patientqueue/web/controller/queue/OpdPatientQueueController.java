@@ -309,13 +309,19 @@ public class OpdPatientQueueController {
 				+ OPDPatientQueueConstants.STATUS);
 		queue.setCategory(selectedCategory);
 		queue.setVisitStatus("REVISIT");		
-		Encounter encounter = Context.getService(PatientQueueService.class).getLastOPDEncounter(patient);
 		OpdPatientQueue opdPatientQueue = null;
-		 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		    String created = sdf.format(encounter.getDateCreated());
-			String sft= sdf.format(new Date());
+		if(queueService.getLastOPDEncounter(patient)==null)
+		{ 
+			return "redirect:/module/patientqueue/main.htm?opdId=" + opdId;
+		}
+		else
+		{
+			Encounter enc=queueService.getLastOPDEncounter(patient);
+		  SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		   String created = sdf.format(enc.getDateCreated());
+          String sft= sdf.format(new Date());
 			int value=sft.compareTo(created);
-					Boolean pd = patient.getDead();
+			Boolean pd = patient.getDead();
 		if (pd == true) {
 			return "redirect:/module/patientdashboard/main.htm?patientId="
 			+ patientId + "&opdId=" + opdId;
@@ -334,6 +340,7 @@ public class OpdPatientQueueController {
 							+ queue.getVisitStatus();
 
 			}
+	}
 	}
 
 }
